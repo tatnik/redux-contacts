@@ -33,7 +33,7 @@ export const ContactListPage = (({
 
 
   const onSubmit = (fv: Partial<FilterFormValues>) => {
-    let findContacts: ContactDto[] = contacts;
+    let findContacts: ContactDto[] = contactsStore.allContacts;
 
     if (fv.name) {
       const fvName = fv.name.toLowerCase();
