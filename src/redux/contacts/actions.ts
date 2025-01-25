@@ -59,7 +59,7 @@ export const fetchContacts = ():ThunkAction<void, RootState, unknown, ContactsAc
         throw new Error('Ошибка при загрузке контактов');
       }
       const data = await response.json();
-      dispatch(fetchContactsSuccess(data));
+      dispatch(fetchContactsSuccess(data as ContactDto[]));
     } catch (error: any) {
       dispatch(fetchContactsFailure(error.message));
     }

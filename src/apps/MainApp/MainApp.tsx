@@ -11,7 +11,8 @@ import {DATA_CONTACT, DATA_GROUP_CONTACT} from 'src/__data__';
 import { useInitializeApp } from 'src/redux/hooks';
 
 export const MainApp = () => {
-  const contactsState = useState<ContactDto[]>(DATA_CONTACT);
+  const contactsState = useState<ContactDto[]>([]);
+
   const favoriteContactsState = useState<FavoriteContactsDto>([
     DATA_CONTACT[0].id,
     DATA_CONTACT[1].id,
@@ -19,6 +20,7 @@ export const MainApp = () => {
     DATA_CONTACT[3].id
   ]);
   const groupContactsState = useState<GroupContactsDto[]>(DATA_GROUP_CONTACT);
+  
   // Инициализация приложения через кастомный хук
   useInitializeApp();
 

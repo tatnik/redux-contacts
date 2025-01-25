@@ -1,33 +1,35 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {CommonPageProps} from './types';
 import {Col, Row} from 'react-bootstrap';
 import {ContactCard} from 'src/components/ContactCard';
 import {FilterForm, FilterFormValues} from 'src/components/FilterForm';
 import {ContactDto} from 'src/types/dto/ContactDto';
-import { fetchContacts } from 'src/redux/contacts/actions';
-import { AppDispatch, RootState } from 'src/redux/store';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { ContactsState } from 'src/redux/contacts/reducer';
+import { useAppSelector } from 'src/redux/hooks';
+import { RootState } from 'src/redux/store';
 
 
-export const ContactListPage = memo<CommonPageProps>(({
-  contactsState, groupContactsState
-}) => {
+export const ContactListPage = (({
+  groupContactsState
+}: CommonPageProps) => {
  
-// +
-  const dispatch: AppDispatch = useAppDispatch();
-  
-  const {allContacts, loading, error} = useAppSelector((state: RootState) => state.contacts);
-
-  const [contacts, setContacts] = useState<ContactDto[]>(allContacts)
-  
+  const [contacts, setContacts] = useState<ContactDto[]>([]);
+  const contactsStore: ContactsState =  useAppSelector((state: RootState) => state.contacts);
 
   useEffect(() => {
-    if (loading ||error) {
-      dispatch(fetchContacts());
+    if(!contactsStore.loading && !contactsStore.error && contacts.length === 0) {
+      setContacts(contactsStore.allContacts)
     }
-  }, );
-//
+  }, [contacts, contactsStore])
 
+
+  if (contactsStore.loading){
+    return <div>Загрузка...</div>;
+  }   
+
+  if (contactsStore.error){
+    return <div>Ошибка загрузки...</div>;
+  }   
 
 
   const onSubmit = (fv: Partial<FilterFormValues>) => {
