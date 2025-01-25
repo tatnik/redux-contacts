@@ -28,7 +28,7 @@ export const ContactListPage = (({
   }   
 
   if (contactsStore.error){
-    return <div>Ошибка загрузки...</div>;
+    return <div>Ошибка загрузки: {contactsStore.error}</div>;
   }   
 
 
