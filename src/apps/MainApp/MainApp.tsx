@@ -8,6 +8,7 @@ import {ContactDto} from 'src/types/dto/ContactDto';
 import {FavoriteContactsDto} from 'src/types/dto/FavoriteContactsDto';
 import {GroupContactsDto} from 'src/types/dto/GroupContactsDto';
 import {DATA_CONTACT, DATA_GROUP_CONTACT} from 'src/__data__';
+import { useInitializeApp } from 'src/redux/hooks';
 
 export const MainApp = () => {
   const contactsState = useState<ContactDto[]>(DATA_CONTACT);
@@ -18,6 +19,8 @@ export const MainApp = () => {
     DATA_CONTACT[3].id
   ]);
   const groupContactsState = useState<GroupContactsDto[]>(DATA_GROUP_CONTACT);
+  // Инициализация приложения через кастомный хук
+  useInitializeApp();
 
   return (
     <ThemeProvider

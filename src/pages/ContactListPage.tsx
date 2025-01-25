@@ -1,17 +1,37 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {CommonPageProps} from './types';
 import {Col, Row} from 'react-bootstrap';
 import {ContactCard} from 'src/components/ContactCard';
 import {FilterForm, FilterFormValues} from 'src/components/FilterForm';
 import {ContactDto} from 'src/types/dto/ContactDto';
+import { fetchContacts } from 'src/redux/contacts/actions';
+import { AppDispatch, RootState } from 'src/redux/store';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 
 
 export const ContactListPage = memo<CommonPageProps>(({
   contactsState, groupContactsState
 }) => {
-  const [contacts, setContacts] = useState<ContactDto[]>(contactsState[0])
+ 
+// +
+  const dispatch: AppDispatch = useAppDispatch();
+  
+  const {allContacts, loading, error} = useAppSelector((state: RootState) => state.contacts);
+
+  const [contacts, setContacts] = useState<ContactDto[]>(allContacts)
+  
+
+  useEffect(() => {
+    if (loading ||error) {
+      dispatch(fetchContacts());
+    }
+  }, );
+//
+
+
+
   const onSubmit = (fv: Partial<FilterFormValues>) => {
-    let findContacts: ContactDto[] = contactsState[0];
+    let findContacts: ContactDto[] = contacts;
 
     if (fv.name) {
       const fvName = fv.name.toLowerCase();

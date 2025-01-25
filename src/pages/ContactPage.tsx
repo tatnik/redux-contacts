@@ -1,21 +1,31 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {CommonPageProps} from './types';
 import {Col, Row} from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
-import {ContactDto} from 'src/types/dto/ContactDto';
+
 import {ContactCard} from 'src/components/ContactCard';
 import {Empty} from 'src/components/Empty';
+
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { fetchContacts } from 'src/redux/contacts/actions';
+import { AppDispatch } from 'src/redux/store';
 
 
 export const ContactPage: FC<CommonPageProps> = ({
   contactsState
 }) => {
   const {contactId} = useParams<{ contactId: string }>();
-  const [contact, setContact] = useState<ContactDto>();
+
+  const dispatch: AppDispatch = useAppDispatch();
+  const { allContacts, loading, error } = useAppSelector(state => state.contacts);
+
+  const contact = allContacts?.find(({id}) => id === contactId);
 
   useEffect(() => {
-    setContact(() => contactsState[0].find(({id}) => id === contactId));
-  }, [contactId]);
+    if (loading ||error) {
+    dispatch(fetchContacts());
+    }
+  }, );
 
   return (
     <Row xxl={3}>
