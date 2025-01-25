@@ -1,15 +1,18 @@
 import { createStore, applyMiddleware, combineReducers, AnyAction } from 'redux';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import {contactsReducer,  ContactsState } from './contacts/reducer';
+import { groupsReducer, GroupsState } from './groups/reducer';
 
 
 export interface RootReducer {
   contacts: ContactsState;
+  groups: GroupsState;
 }
 
 
 const rootReducer = combineReducers<RootReducer>({
   contacts: contactsReducer,
+  groups: groupsReducer,
 });
 
 //export type RootState = ReturnType<typeof rootReducer>;

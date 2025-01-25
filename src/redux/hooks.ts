@@ -6,6 +6,7 @@ import { RootState } from "./store";
 import { AnyAction } from 'redux';
 import { useEffect } from 'react';
 import { fetchContacts } from './contacts/actions';
+import { fetchGroups } from './groups/actions';
 
 export const useAppDispatch = useDispatch<ThunkDispatch<RootState, void, AnyAction>>;
 
@@ -19,9 +20,8 @@ export const useInitializeApp = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // Загрузка списка контактов
+    // Загрузка данных контактов и групп для стора
     dispatch(fetchContacts());
-    // Загрузка списка групп
-    //dispatch(fetchGroups());
+    dispatch(fetchGroups());
   }, [dispatch]);
 };
