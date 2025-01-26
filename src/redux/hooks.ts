@@ -7,6 +7,7 @@ import { AnyAction } from 'redux';
 import { useEffect } from 'react';
 import { fetchContacts } from './contacts/actions';
 import { fetchGroups } from './groups/actions';
+import { fetchFavorites } from './favorites/actions';
 
 export const useAppDispatch = useDispatch<ThunkDispatch<RootState, void, AnyAction>>;
 
@@ -20,8 +21,9 @@ export const useInitializeApp = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // Загрузка данных контактов и групп для стора
+    // Загрузка в стор данных контактов,групп и избранных
     dispatch(fetchContacts());
     dispatch(fetchGroups());
+    dispatch(fetchFavorites());
   }, [dispatch]);
 };
