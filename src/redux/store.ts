@@ -10,7 +10,7 @@ export interface RootReducer {
 }
 
 
-const rootReducer = combineReducers<RootReducer>({
+export const rootReducer = combineReducers<RootReducer>({
   contacts: contactsReducer,
   groups: groupsReducer,
 });
@@ -19,6 +19,7 @@ const rootReducer = combineReducers<RootReducer>({
 
 export type RootState = {
    contacts: ContactsState;
+   groups: GroupsState;
 };
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

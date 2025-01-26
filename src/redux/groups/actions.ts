@@ -49,12 +49,12 @@ export const fetchGroupsFailure = (
   payload: error,
 });
 
-// Thunk для загрузки контактов
+// Thunk для загрузки групп
 export const fetchGroups = ():ThunkAction<void, RootState, unknown, GroupsAction> => {
   return async (dispatch) => {
     dispatch(fetchGroupsRequest());
     try {
-      const response = await fetch('https://mocki.io/v1/');
+      const response = await fetch('https://mocki.io/v1/b6d254dd-bd85-4683-b671-3068230b2a82');
       if (!response.ok) {
         throw new Error('Ошибка при загрузке групп контактов');
       }

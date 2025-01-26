@@ -7,14 +7,14 @@ import {ContactDto} from 'src/types/dto/ContactDto';
 import { ContactsState } from 'src/redux/contacts/reducer';
 import { useAppSelector } from 'src/redux/hooks';
 import { RootState } from 'src/redux/store';
+import { GroupsState } from 'src/redux/groups/reducer';
 
 
-export const ContactListPage = (({
-  groupContactsState
-}: CommonPageProps) => {
+export const ContactListPage = ((_: CommonPageProps) => {
  
   const [contacts, setContacts] = useState<ContactDto[]>([]);
   const contactsStore: ContactsState =  useAppSelector((state: RootState) => state.contacts);
+  const groupsStore: GroupsState =  useAppSelector((state: RootState) => state.groups);
 
   useEffect(() => {
     if(!contactsStore.loading && !contactsStore.error && contacts.length === 0) {
@@ -23,12 +23,14 @@ export const ContactListPage = (({
   }, [contacts, contactsStore])
 
 
-  if (contactsStore.loading){
+  if (contactsStore.loading || groupsStore.loading){
     return <div>Загрузка...</div>;
   }   
-
   if (contactsStore.error){
-    return <div>Ошибка загрузки: {contactsStore.error}</div>;
+    return <div>Ошибка загрузки контактов: {contactsStore.error}</div>;
+  }   
+  if (groupsStore.error){
+    return <div>Ошибка загрузки групп: {groupsStore.error}</div>;
   }   
 
 
@@ -43,7 +45,7 @@ export const ContactListPage = (({
     }
 
     if (fv.groupId) {
-      const groupContacts = groupContactsState[0].find(({id}) => id === fv.groupId);
+      const groupContacts = groupsStore.allGroups.find(({id}) => id === fv.groupId);
 
       if (groupContacts) {
         findContacts = findContacts.filter(({id}) => (
@@ -58,7 +60,7 @@ export const ContactListPage = (({
   return (
     <Row xxl={1}>
       <Col className="mb-3">
-        <FilterForm groupContactsList={groupContactsState[0]} initialValues={{}} onSubmit={onSubmit} />
+        <FilterForm groupContactsList={groupsStore.allGroups} initialValues={{}} onSubmit={onSubmit} />
       </Col>
       <Col>
         <Row xxl={4} className="g-4">

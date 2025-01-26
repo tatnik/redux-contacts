@@ -12,9 +12,15 @@ export const ContactPage: FC<CommonPageProps> = ({
   contactsState
 }) => {
   const {contactId} = useParams<{ contactId: string }>();
-  const { allContacts} = useAppSelector(state => state.contacts);
+  const contactsStore = useAppSelector(state => state.contacts);
 
-  const contact = allContacts?.find(({id}) => id === contactId);
+  if (contactsStore.loading ){
+    return <div>Загрузка...</div>;
+  }   
+  if (contactsStore.error){
+    return <div>Ошибка загрузки контактов: {contactsStore.error}</div>;
+  }
+  const contact = contactsStore.allContacts.find(({id}) => id === contactId);
 
 
   return (
