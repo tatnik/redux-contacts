@@ -1,4 +1,3 @@
-import {CommonPageProps} from './types';
 import {Col, Row} from 'react-bootstrap';
 import {ContactCard} from 'src/components/ContactCard';
 import { useAppSelector } from 'src/redux/hooks';
@@ -6,7 +5,7 @@ import { RootState } from 'src/redux/store';
 import { ContactsState } from 'src/redux/contacts/reducer';
 import { FavoritesState } from 'src/redux/favorites/reducer';
 
-export const FavoritListPage = ((_ : CommonPageProps) => {
+export const FavoritListPage = (() => {
 
   const contactsStore: ContactsState =  useAppSelector((state: RootState) => state.contacts);
   const favoritesStore: FavoritesState =  useAppSelector((state: RootState) => state.favorites);

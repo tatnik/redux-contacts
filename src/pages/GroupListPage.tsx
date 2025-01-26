@@ -1,12 +1,11 @@
 import React from 'react';
-import {CommonPageProps} from './types';
 import {Col, Row} from 'react-bootstrap';
 import {GroupContactsCard} from 'src/components/GroupContactsCard';
 import { GroupsState } from 'src/redux/groups/reducer';
 import { useAppSelector } from 'src/redux/hooks';
 import { RootState } from 'src/redux/store';
 
-export const GroupListPage = ((_:CommonPageProps) => {
+export const GroupListPage = (() => {
   const groupsStore: GroupsState =  useAppSelector((state: RootState) => state.groups);
   if (groupsStore.loading){
     return <div>Загрузка...</div>;

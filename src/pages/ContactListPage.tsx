@@ -1,5 +1,4 @@
 import React, { useEffect, useState} from 'react';
-import {CommonPageProps} from './types';
 import {Col, Row} from 'react-bootstrap';
 import {ContactCard} from 'src/components/ContactCard';
 import {FilterForm, FilterFormValues} from 'src/components/FilterForm';
@@ -10,7 +9,7 @@ import { RootState } from 'src/redux/store';
 import { GroupsState } from 'src/redux/groups/reducer';
 
 
-export const ContactListPage = ((_: CommonPageProps) => {
+export const ContactListPage = (() => {
  
   const [contacts, setContacts] = useState<ContactDto[]>([]);
   const contactsStore: ContactsState =  useAppSelector((state: RootState) => state.contacts);

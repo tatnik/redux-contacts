@@ -1,4 +1,3 @@
-import {CommonPageProps} from './types';
 import {Col, Row} from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
 import {GroupContactsCard} from 'src/components/GroupContactsCard';
@@ -9,7 +8,7 @@ import { GroupsState } from 'src/redux/groups/reducer';
 import { useAppSelector } from 'src/redux/hooks';
 import { RootState } from 'src/redux/store';
 
-export const GroupPage = (_ :CommonPageProps) => {
+export const GroupPage = () => {
   const {groupId} = useParams<{ groupId: string }>();
 
   const contactsStore: ContactsState =  useAppSelector((state: RootState) => state.contacts);
