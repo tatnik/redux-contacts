@@ -1,12 +1,22 @@
-import React, {memo} from 'react';
-import {CommonPageProps} from './types';
+import React from 'react';
 import {Col, Row} from 'react-bootstrap';
 import {GroupContactsCard} from 'src/components/GroupContactsCard';
+import { GroupsState } from 'src/redux/groups/reducer';
+import { useAppSelector } from 'src/redux/hooks';
+import { RootState } from 'src/redux/store';
 
-export const GroupListPage = memo<CommonPageProps>(({contactsState, groupContactsState}) => {
+export const GroupListPage = (() => {
+  const groupsStore: GroupsState =  useAppSelector((state: RootState) => state.groups);
+  if (groupsStore.loading){
+    return <div>Загрузка...</div>;
+  }   
+  if (groupsStore.error){
+    return <div>Ошибка загрузки групп: {groupsStore.error}</div>;
+  }  
+
   return (
     <Row xxl={4}>
-      {groupContactsState[0].map((groupContacts) => (
+      {groupsStore.allGroups.map((groupContacts) => (
         <Col key={groupContacts.id}>
           <GroupContactsCard groupContacts={groupContacts} withLink />
         </Col>
